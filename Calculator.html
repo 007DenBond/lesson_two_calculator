@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Семейный бюджет</title>
+<link rel="stylesheet" href="styles/main.css">
+</head>
+<body>
+
+  <header>
+    <h1>💰 Семейный бюджет</h1>
+    <p>Небольшой лендинг + полноценный личный финансовый трекер</p>
+    <div class="hbtns">
+      <button class="hb" onclick="goToApp()">🚀 Начать</button>
+      <button class="hb" onclick="exportD()">📥 Экспорт</button>
+      <button class="hb" onclick="clearAll()">🗑️ Очистить</button>
+    </div>
+  </header>
+  <section class="hero" id="home">
+    <h2>Контролируйте деньги спокойно и в одном месте</h2>
+    <p>
+      Ведите доходы и расходы, смотрите аналитику по категориям, ставьте цели накоплений
+      и отслеживайте прогресс. Все данные сохраняются локально в вашем браузере.
+    </p>
+    <div class="heroacts">
+      <button class="btn bl" onclick="goToApp()">Перейти к калькулятору</button>
+      <button class="btn pr" onclick="scrollToTips()">Посмотреть советы</button>
+    </div>
+    <div class="herochips">
+      <span class="herochip">⚡ Быстрый ввод операций</span>
+      <span class="herochip">📊 Графики и структура расходов</span>
+      <span class="herochip">🎯 Цели и прогресс накоплений</span>
+      <span class="herochip">🌙 Светлая и темная тема</span>
+    </div>
+  </section>
+  
+  <div class="toasts" id="toasts"></div>
+  
+  <div class="modalbg" id="mbg" onclick="if(event.target===this)this.classList.remove('on')">
+    <div class="modal">
+      <h3>📥 Экспорт данных</h3>
+      <pre id="eo"></pre><br>
+      <button class="btn bl" onclick="cpEx()">📋 Копировать</button>
+      <button class="btn rd" style="margin-left:6px"
+        onclick="document.getElementById('mbg').classList.remove('on')">✕ Закрыть</button>
+    </div>
+  </div>
+  
+  <div class="wrap" id="app">
+  
+    <div class="mbar">
+      <label>📅 Период:</label>
+      <select id="sm"></select>
+      <input type="number" id="iy" min="2020" max="2035" style="width:80px">
+    </div>
+  
+    <div class="dash">
+      <div class="dc i">
+        <div class="ico">💵</div>
+        <div class="lbl">Доходы</div>
+        <div class="val" id="vi">0 ₽</div>
+        <div class="sub" id="ni">0 источников</div>
+      </div>
+      <div class="dc e">
+        <div class="ico">🛒</div>
+        <div class="lbl">Расходы</div>
+        <div class="val" id="ve">0 ₽</div>
+        <div class="sub" id="ne">0 статей</div>
+      </div>
+      <div class="dc b">
+        <div class="ico">⚖️</div>
+        <div class="lbl">Баланс</div>
+        <div class="val" id="vb">0 ₽</div>
+        <div class="sub" id="pb">—</div>
+      </div>
+      <div class="dc s">
+        <div class="ico">🎯</div>
+        <div class="lbl">Накопления</div>
+        <div class="val" id="vs">0 ₽</div>
+        <div class="sub" id="ns">Нет целей</div>
+      </div>
+    </div>
+  
+    <div class="barsec">
+      <div class="bartitle">📊 Доходы vs Расходы</div>
+      <div class="barvis">
+        <div class="sp" id="bsp" style="width:0"></div>
+        <div class="rm" id="brm" style="width:100%"></div>
+      </div>
+      <div class="barlbl">
+        <span id="lsp">Расходы: 0%</span>
+        <span id="lrm">Остаток: 100%</span>
+      </div>
+    </div>
+  
+    <div class="g2">
+      <div class="sec si">
+        <div class="sech">
+          <h2>💵 Доходы</h2>
+          <span class="tot" id="sti">0 ₽</span>
+        </div>
+        <div class="secb">
+          <div class="af">
+            <input type="text" id="a1" placeholder="Название (Зарплата...)">
+            <input type="number" id="a2" placeholder="Сумма" min="0">
+            <button class="btn gr" onclick="aI()">＋</button>
+          </div>
+          <ul class="il" id="li"></ul>
+        </div>
+      </div>
+      <div class="sec se">
+        <div class="sech">
+          <h2>🛒 Расходы</h2>
+          <span class="tot" id="ste">0 ₽</span>
+        </div>
+        <div class="secb">
+          <div class="af">
+            <input type="text" id="b1" placeholder="Название (Продукты...)">
+            <input type="number" id="b2" placeholder="Сумма" min="0">
+            <select id="b3">
+              <option value="Продукты">🍎 Продукты</option>
+              <option value="Жильё">🏠 Жильё</option>
+              <option value="Транспорт">🚗 Транспорт</option>
+              <option value="Здоровье">💊 Здоровье</option>
+              <option value="Образование">📚 Образование</option>
+              <option value="Развлечения">🎮 Развлечения</option>
+              <option value="Одежда">👗 Одежда</option>
+              <option value="Связь">📱 Связь</option>
+              <option value="Другое">📦 Другое</option>
+            </select>
+            <button class="btn rd" onclick="aE()">＋</button>
+          </div>
+          <ul class="il" id="le"></ul>
+        </div>
+      </div>
+    </div>
+  
+    <div class="an">
+      <div class="chbox">
+        <h3>📊 По категориям</h3>
+        <div id="cbs"></div>
+      </div>
+      <div class="chbox">
+        <h3>🥧 Структура</h3>
+        <div class="pw">
+          <svg class="pvg" id="svg" viewBox="0 0 200 200"></svg>
+          <div class="plg" id="plg"></div>
+        </div>
+      </div>
+    </div>
+  
+    <div class="gsec">
+      <div class="bartitle">🎯 Цели накоплений</div>
+      <div class="af">
+        <input type="text" id="c1" placeholder="Цель (Отпуск...)" style="flex:2">
+        <input type="number" id="c2" placeholder="Сумма ₽" min="0" style="max-width:120px">
+        <button class="btn pr" onclick="aG()">＋ Цель</button>
+      </div>
+      <div id="gl"></div>
+    </div>
+  
+    <div class="tsec" id="tips">
+      <div class="bartitle">💡 Советы</div>
+      <div id="tl"></div>
+    </div>
+  
+  </div>
+  
+  <footer>💰 Семейный бюджет © 2025</footer>
+  
+  <button class="thbtn" id="tb" onclick="tgT()" title="Сменить тему">
+    <span id="ti">☀️</span>
+  </button>
+  <script src="scripts/app.js"></script>
+    </body>
+    </html>
