@@ -3,10 +3,125 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Семейный бюджет</title>
-  <meta http-equiv="refresh" content="0; url=Calculator.html">
+  <title>Семейный бюджет - Старт</title>
+  <style>
+    :root{
+      --bg:#f3f6fb;
+      --card:#ffffff;
+      --text:#1b2430;
+      --muted:#5a6780;
+      --border:#dfe6f2;
+      --grad1:#667eea;
+      --grad2:#764ba2;
+      --btn:#3182ce;
+    }
+    [data-theme="dark"]{
+      --bg:#0f1724;
+      --card:#1a2332;
+      --text:#e2e8f0;
+      --muted:#a0aec0;
+      --border:#2d3748;
+      --btn:#4299e1;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background:var(--bg);
+      color:var(--text);
+      font-family:-apple-system,BlinkMacSystemFont,Roboto,sans-serif;
+      transition:background .25s,color .25s;
+      padding:16px;
+    }
+    .card{
+      width:100%;
+      max-width:560px;
+      border:1px solid var(--border);
+      border-radius:14px;
+      background:var(--card);
+      padding:28px 22px;
+      box-shadow:0 8px 24px rgba(0,0,0,.08);
+    }
+    .title{
+      margin:0 0 8px 0;
+      font-size:1.7rem;
+      line-height:1.2;
+      background:linear-gradient(135deg,var(--grad1),var(--grad2));
+      -webkit-background-clip:text;
+      background-clip:text;
+      color:transparent;
+    }
+    .text{
+      margin:0 0 18px 0;
+      color:var(--muted);
+      line-height:1.5;
+    }
+    .actions{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+    }
+    .btn{
+      border:none;
+      border-radius:10px;
+      padding:10px 14px;
+      font-size:.95rem;
+      font-weight:600;
+      cursor:pointer;
+    }
+    .btn-primary{
+      background:var(--btn);
+      color:#fff;
+      text-decoration:none;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+    }
+    .btn-secondary{
+      background:transparent;
+      color:var(--text);
+      border:1px solid var(--border);
+    }
+  </style>
 </head>
 <body>
-  <p>Переход к приложению... Если не открылось автоматически, нажмите <a href="Calculator.html">сюда</a>.</p>
+  <main class="card">
+    <h1 class="title">Семейный бюджет</h1>
+    <p class="text">
+      Добро пожаловать! Выберите тему интерфейса и переходите к калькулятору бюджета.
+      Выбор темы сохраняется в браузере.
+    </p>
+    <div class="actions">
+      <a class="btn btn-primary" href="Calculator.html">Открыть калькулятор</a>
+      <button class="btn btn-secondary" id="themeToggle" type="button">Сменить тему</button>
+    </div>
+  </main>
+  <script>
+    function applyTheme(theme){
+      if(theme === 'dark'){
+        document.documentElement.setAttribute('data-theme','dark');
+      } else {
+        document.documentElement.removeAttribute('data-theme');
+      }
+      try { localStorage.setItem('budget_theme', theme); } catch (e) {}
+    }
+
+    (function initTheme(){
+      var saved = null;
+      try { saved = localStorage.getItem('budget_theme'); } catch (e) {}
+      if(!saved && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches){
+        saved = 'dark';
+      }
+      applyTheme(saved === 'dark' ? 'dark' : 'light');
+    })();
+
+    document.getElementById('themeToggle').addEventListener('click', function(){
+      var isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+      applyTheme(isDark ? 'light' : 'dark');
+    });
+  </script>
 </body>
 </html>
